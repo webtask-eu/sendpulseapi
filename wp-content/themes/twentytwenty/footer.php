@@ -67,9 +67,50 @@
 
                             <input type="text" class="user-email" name="email" placeholder="<?php _e("Your email", 'ForTraderMaster'); ?>">
                             
-                            <button type="submit"><?php _e("Subscribe", 'ForTraderMaster'); ?></button>
+                            <button type="submit" class= "wlsubmit"><?php _e("Subscribe", 'ForTraderMaster'); ?></button>
 							
                         </form>
+
+<style>
+.wlerror
+{
+	border: 1px solid #ff9c9c;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#subscribeFormFooter .wlsubmit").click(function(){
+			
+			var wlemail = $('#subscribeFormFooter .user-email').val();
+			var wldata = 'id=939507&emails='+wlemail+'&confirmation=force'+'&sender_email=tcelgrad@gmail.com';
+			if (wlemail == '')
+			{
+				$('#subscribeFormFooter .user-email').addClass('wlerror');
+				return false;
+			}
+			else
+			{
+				$('#subscribeFormFooter .user-email').removeClass('wlerror');
+				
+				$.ajax({
+					type: 'POST',
+					url: 'wp-content/themes/twentytwenty/wlmail.php',
+					data: wldata,
+					success: function(data){
+						alert('Подписан!');
+						$('#subscribeFormFooter .user-email').val('')
+						return false;
+					}
+				});
+			}
+	return false;
+
+		});	
+	});
+</script>
+
+
 
 	</body>
 </html>
